@@ -1,0 +1,12 @@
+:root {
+    .header-parent {
+        background-color: var(--background-header-color);
+        padding: 20px 100px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .logo img {
+        width: 140px;
+        height: 45px;
+    }
+}
