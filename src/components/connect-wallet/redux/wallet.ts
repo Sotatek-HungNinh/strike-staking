@@ -18,9 +18,12 @@ export const walletSlice = createSlice({
         },
         setEthereumAddress: (state, action) => {
             state.ethereumAddress = action.payload;
+        },
+        setTrustAddress: (state, action) => {
+            state.trust = action.payload;
         }
     }
 })
-export const { setOpenConnectDialog, setEthereumAddress } = walletSlice.actions;
+export const { setOpenConnectDialog, setEthereumAddress, setTrustAddress } = walletSlice.actions;
 const { reducer: walletReducer } = walletSlice;
 export default walletReducer;

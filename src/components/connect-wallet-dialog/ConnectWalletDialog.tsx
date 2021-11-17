@@ -9,7 +9,7 @@ import TrustSVG from '../../assets/icon/TrustSVG';
 import { MISSING_EXTENSION_ERROR } from '../../constant/uninstallExtentionException';
 import { connectMetaMask, connectTrust } from '../../helpers/connectWallet';
 import { openSnackbar, SnackbarVariant } from '../../store/snackbar';
-import { setEthereumAddress, setOpenConnectDialog } from '../connect-wallet/redux/wallet';
+import { setEthereumAddress, setOpenConnectDialog, setTrustAddress } from '../connect-wallet/redux/wallet';
 import { useAppDispatch, useAppSelector } from './../../store/hooks';
 import styles from './ConnectWalletDialog.module.scss';
 
@@ -84,10 +84,17 @@ const ConnectWalletDialog: React.FC = () => {
   };
 
   // Connect Trust
-  const handleConnectTrust = () => {
-    const connectedTrust = connectTrust();
-    console.log('TRUSTSSSSSSS: ', connectedTrust);
-    
+  const handleConnectTrust = async() => {
+    const connectedTrust = await connectTrust();
+    if (connectedTrust.length > 0) {
+      dispatch(setTrustAddress(connectedTrust[0]));
+      dispatch(setOpenConnectDialog(false));
+    } else {
+      dispatch(openSnackbar({
+        message: 'Connect to Trust wallet did not success!',
+        variant: SnackbarVariant.WARNING
+      }))
+    }
   }
 
   return (

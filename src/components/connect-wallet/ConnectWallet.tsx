@@ -16,7 +16,7 @@ const ConnectWallet: React.FC = () => {
   const handleOpenConnectWalletDialog = () => {
     dispatch(setOpenConnectDialog(true));
   };
-  const connectWallet = useAppSelector((state) => state.wallet);
+  const wallet = useAppSelector((state) => state.wallet);
   const ref = useRef<any>();
   const [openDropdown, setOpenDropdown] = useState(false);
   const getShortAddress = (address: string) => {
@@ -31,38 +31,38 @@ const ConnectWallet: React.FC = () => {
   useOnClickOutside(ref, handleCloseDropdown);
   useEffect(() => {
     handleCloseDropdown();
-  }, [connectWallet]);
+  }, [wallet]);
 
   return (
     <>
-      {isConnected(connectWallet) ? (
+      {isConnected(wallet) ? (
         <>
           <div className={cx('button')} onClick={handleOpenDropdown}>
             Connected wallet <ArrowDown size={'md'} />
           </div>
           <div className={cx('select', !openDropdown && 'close')} ref={ref}>
-            {connectWallet.ethereumAddress ? (
+            {wallet.ethereumAddress ? (
               <div className={cx('wallet-item')}>
                 <BscSVG size={'md'} />
-                {getShortAddress(connectWallet.ethereumAddress)}
+                {getShortAddress(wallet.ethereumAddress)}
               </div>
             ) : null}
-            {connectWallet.trust ? (
+            {wallet.trust ? (
                 <div className={cx('wallet-item')}>
                     <BscSVG size={'md'} />
-                    {getShortAddress(connectWallet.trust)}
+                    {getShortAddress(wallet.trust)}
                 </div>
             ) : null}
-            {connectWallet.coinbase ? (
+            {wallet.coinbase ? (
                 <div className={cx('wallet-item')}>
                     <BscSVG size={'md'} />
-                    {getShortAddress(connectWallet.coinbase)}
+                    {getShortAddress(wallet.coinbase)}
                 </div>
             ) : null}
-            {connectWallet.walletconnect ? (
+            {wallet.walletconnect ? (
                 <div className={cx('wallet-item')}>
                     <BscSVG size={'md'} />
-                    {getShortAddress(connectWallet.walletconnect)}
+                    {getShortAddress(wallet.walletconnect)}
                 </div>
             ) : null}
             <div onClick={handleOpenConnectWalletDialog}><AddContainedSVG size={'md'} /> Add wallet</div>
