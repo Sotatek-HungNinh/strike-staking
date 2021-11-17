@@ -3,7 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const initialState: WalletData = {
     openConnectDialog: false,
-    bsc: ''
+    bsc: '',
+    ethereumAddress: '',
+    trust: '',
+    coinbase: '',
+    walletconnect: ''
 }
 export const walletSlice = createSlice({
     name: 'wallet',
@@ -11,9 +15,12 @@ export const walletSlice = createSlice({
     reducers: {
         setOpenConnectDialog: (state, action: PayloadAction<boolean>) => {
             state.openConnectDialog = action.payload;
+        },
+        setEthereumAddress: (state, action) => {
+            state.ethereumAddress = action.payload;
         }
     }
 })
-export const { setOpenConnectDialog } = walletSlice.actions;
+export const { setOpenConnectDialog, setEthereumAddress } = walletSlice.actions;
 const { reducer: walletReducer } = walletSlice;
 export default walletReducer;

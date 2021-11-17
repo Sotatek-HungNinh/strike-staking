@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = (props) => {
             <div className={cx('logo')}>
                 <img src={logo} alt="logo" />
             </div>
-            <div>Stake Governance</div>
+            <div className={cx('stake-governance')}>Stake Governance</div>
             <div>
                 <ConnectWallet />
             </div>

@@ -2,21 +2,20 @@ import CloseIcon from '@material-ui/icons/Close';
 import { ButtonBase, Dialog, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import classnames from 'classnames/bind';
-import React, { useState } from 'react';
+import React from 'react';
 import BscSVG from '../../assets/icon/BscSVG';
 import CoinBaseSVG from '../../assets/icon/CoinBaseSVG';
 import TrustSVG from '../../assets/icon/TrustSVG';
 import { MISSING_EXTENSION_ERROR } from '../../constant/uninstallExtentionException';
-import { connectMetaMask } from '../../helpers/connectWallet';
+import { connectMetaMask, connectTrust } from '../../helpers/connectWallet';
 import { openSnackbar, SnackbarVariant } from '../../store/snackbar';
-import { setOpenConnectDialog } from '../connect-wallet/redux/wallet';
+import { setEthereumAddress, setOpenConnectDialog } from '../connect-wallet/redux/wallet';
 import { useAppDispatch, useAppSelector } from './../../store/hooks';
 import styles from './ConnectWalletDialog.module.scss';
 
 const cx = classnames.bind(styles);
 
 const ConnectWalletDialog: React.FC = () => {
-  const [isConnect, setIsConnect] = useState(true);
   const dispatch = useAppDispatch();
   const wallet = useAppSelector((state) => state.wallet);
   const openConnectWalletDialog = useAppSelector(
@@ -33,7 +32,6 @@ const ConnectWalletDialog: React.FC = () => {
         message: 'Your brower are not install Metamask extension, please install it!',
         variant: SnackbarVariant.ERROR
       }))
-      setIsConnect(false);
     }
     const netId = window.ethereum.networkVersion
       ? +window.ethereum.networkVersion
@@ -41,20 +39,17 @@ const ConnectWalletDialog: React.FC = () => {
     if (netId) {
       if (netId === 1 || netId === 3) {
         if (netId === 3 && process.env.REACT_APP_ENV === 'prod') {
-          setIsConnect(false);
           dispatch(openSnackbar({
             message: 'You are currently visiting the Ropsten Test Network for Strike Finance. Please change your metamask to access the Ethereum Mainnet.',
             variant: SnackbarVariant.ERROR
           }))
         } else if (netId === 1 && process.env.REACT_APP_ENV === 'dev') {
-          setIsConnect(false);
           dispatch(openSnackbar({
             message: 'You are currently visiting the Main Network for Strike Finance. Please change your metamask to access the Ropsten Test Network.',
             variant: SnackbarVariant.ERROR
           }));
         } 
       } else {
-        setIsConnect(false);
         dispatch(openSnackbar({
           message: 'You are currently connected to another network. Please connect to Ethereum Network',
           variant: SnackbarVariant.ERROR
@@ -65,21 +60,18 @@ const ConnectWalletDialog: React.FC = () => {
   // Connect MetaMask
   const handleConnectMetaMask = async () => {
     try {
-      if (wallet.bsc) {
-        // handleOpenConnectMetaMaskNotification();
+      if (wallet.ethereumAddress) {
+        dispatch(openSnackbar({
+          message: 'Please open MetaMask extension in your browser to change wallet address!',
+          variant: SnackbarVariant.ERROR
+        }))
       } else {
         checkNetwork();
-        // connect
-        console.log('CHECK FLAG: ', isConnect);
-        // if (connect) {
-        //   const publicKey = await connectMetaMask();
-        //   // if (true) {
-        //   console.log('RESPONSE: ', publicKey);
-        // }
+        const publicKey = await connectMetaMask();
+        dispatch(setEthereumAddress(publicKey));
       }
     } catch (e: any) {
       if (e.message === MISSING_EXTENSION_ERROR) {
-        // dispatch(setInstallationRequestWarning({ open: true, walletType: SoftwareWalletType.METAMASK }));
         dispatch(
           openSnackbar({
             message: 'Extension not install!',
@@ -90,6 +82,13 @@ const ConnectWalletDialog: React.FC = () => {
     }
     handleCloseConnectDialog();
   };
+
+  // Connect Trust
+  const handleConnectTrust = () => {
+    const connectedTrust = connectTrust();
+    console.log('TRUSTSSSSSSS: ', connectedTrust);
+    
+  }
 
   return (
     <Dialog
@@ -130,7 +129,7 @@ const ConnectWalletDialog: React.FC = () => {
       <ButtonBase
         disableRipple={true}
         className={cx('button')}
-        // onClick={handleConnectMetaMask}
+        onClick={handleConnectTrust}
       >
         <TrustSVG size={'xl'} />
         <p>Trust</p>

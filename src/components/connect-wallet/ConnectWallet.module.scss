@@ -1,9 +1,27 @@
 :root {
-  .button-connect-wallet {
+  .button {
     background-color: var(--primary-button-bg);
     padding: 10px;
     border-radius: 10px;
     color: var(--color-text-white);
     cursor: pointer;
+  }
+  .select {
+    background: #dedede;
+    border-radius: 10px;
+    padding: 10px;
+    top: 60px;
+    position: absolute;
+    width: 13%;
+    cursor: pointer;
+    .wallet-item {
+      margin: 3px 0;
+    }
+    .wallet-item:hover {
+      background-color: rgb(164, 196, 185);
+    }
+  }
+  .close {
+    display: none;
   }
 }
