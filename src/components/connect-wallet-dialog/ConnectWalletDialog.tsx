@@ -1,8 +1,9 @@
+import { Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { ButtonBase, Dialog, IconButton, Typography } from '@mui/material';
+import { ButtonBase, Dialog, IconButton, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import classnames from 'classnames/bind';
-import React from 'react';
+import React, { useState } from 'react';
 import BscSVG from '../../assets/icon/BscSVG';
 import CoinBaseSVG from '../../assets/icon/CoinBaseSVG';
 import TrustSVG from '../../assets/icon/TrustSVG';
@@ -21,6 +22,7 @@ const ConnectWalletDialog: React.FC = () => {
   const openConnectWalletDialog = useAppSelector(
     (state) => state.wallet.openConnectDialog
   );
+  const [coinbaseDialogOpen, setCoinbaseDialogOpen] = useState(false);
   const handleCloseConnectDialog = () => {
     dispatch(setOpenConnectDialog(false));
   };
@@ -85,10 +87,10 @@ const ConnectWalletDialog: React.FC = () => {
 
   // Connect Trust
   const handleConnectTrust = async() => {
+    dispatch(setOpenConnectDialog(false));
     const connectedTrust = await connectTrust();
     if (connectedTrust.length > 0) {
       dispatch(setTrustAddress(connectedTrust[0]));
-      dispatch(setOpenConnectDialog(false));
     } else {
       dispatch(openSnackbar({
         message: 'Connect to Trust wallet did not success!',
@@ -97,7 +99,17 @@ const ConnectWalletDialog: React.FC = () => {
     }
   }
 
+  const handleConnectCoinBase = () => {
+    dispatch(setOpenConnectDialog(false));
+    setCoinbaseDialogOpen(true);
+  }
+
+  const handleCloseConnectCoibaseDialog = () => {
+    setCoinbaseDialogOpen(false);
+  }
+
   return (
+    <>
     <Dialog
       open={openConnectWalletDialog}
       onClose={handleCloseConnectDialog}
@@ -144,7 +156,7 @@ const ConnectWalletDialog: React.FC = () => {
       <ButtonBase
         disableRipple={true}
         className={cx('button')}
-        // onClick={handleConnectMetaMask}
+        onClick={handleConnectCoinBase}
       >
         <CoinBaseSVG size={'xl'} />
         <p>CoinBase</p>
@@ -158,6 +170,54 @@ const ConnectWalletDialog: React.FC = () => {
         <p>WalletConnect</p>
       </ButtonBase>
     </Dialog>
+    {/* Coinbase login dialog */}
+    <Dialog
+      open={coinbaseDialogOpen}
+      fullWidth={true}
+      maxWidth={'xs'}
+      disableEscapeKeyDown={true}
+    >
+      <Box display={'flex'} justifyContent={'space-between'}>
+        <Typography component={'div'}>
+          <IconButton size={'small'} className={cx('hidden')}>
+            <CloseIcon />
+          </IconButton>
+        </Typography>
+        <Typography component={'div'} className={cx('title')}>
+          <Box>Connect Coinbase</Box>
+        </Typography>
+        <Typography component={'div'}>
+          <IconButton
+            onClick={handleCloseConnectCoibaseDialog}
+            size={'small'}
+            className={cx('close-button')}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Typography>
+      </Box>
+      <Box display={'flex'} justifyContent={'space-between'} padding={2}>
+        <TextField
+          required
+          id="outlined-required"
+          label="Client ID"
+          defaultValue=""
+          size="medium"
+          fullWidth={true}
+        />
+      </Box>
+      <Button
+        size="medium"
+        style={{
+          borderRadius: 20,
+          backgroundColor: "#21b6ae",
+          padding: "18px 36px",
+          color: "#fff",
+          fontWeight: 'bold',
+      }}
+      >Connect</Button>
+    </Dialog>
+    </>
   );
 };
 export default ConnectWalletDialog;
