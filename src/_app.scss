@@ -13,6 +13,7 @@ body {
   --color-text-white: #fff;
   --color-dialog-title: #4e4b66;
   --color-primary: #1a88c9;
+  --background-color-main: #39496a;
 }
 [data-theme='dark'] {
   --background-color: #232424;
@@ -21,4 +22,14 @@ body {
   .css-zzms1-MuiSnackbar-root {
     top: 95px !important;
   }
+}
+.area-chart-main {
+  padding: 0 100px;
+}
+.footer {
+  height: 100px;
+  background: var(--background-color-main);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

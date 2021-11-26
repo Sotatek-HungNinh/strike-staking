@@ -66,6 +66,9 @@ export const connectTrust = async() => {
           56: `${process.env.REACT_APP_TRUST_BRIDGE}`
         },
         chainId: 56
+      },
+      display: {
+        name: "Mobile"
       }
     }
   }
