@@ -1,19 +1,20 @@
+import classnames from 'classnames/bind';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import classnames from 'classnames/bind';
-import styles from './ConnectWallet.module.scss';
-import { setOpenConnectDialog } from './redux/wallet';
-import { useAppSelector } from '../../store/hooks';
-import { isConnected } from '../../helpers/connectWallet';
+import AddContainedSVG from '../../assets/icon/AddContainedSVG';
 import ArrowDown from '../../assets/icon/ArrowDown';
 import BscSVG from '../../assets/icon/BscSVG';
-import AddContainedSVG from '../../assets/icon/AddContainedSVG';
+import { isConnected } from '../../helpers/connectWallet';
 import useOnClickOutside from '../../helpers/useClickOutside';
+import { useAppSelector } from '../../store/hooks';
+import styles from './ConnectWallet.module.scss';
+import { setOpenConnectDialog } from './redux/wallet';
 const cx = classnames.bind(styles);
 
 const ConnectWallet: React.FC = () => {
   const dispatch = useDispatch();
   const handleOpenConnectWalletDialog = () => {
+    console.log('ADD WALLET');
     dispatch(setOpenConnectDialog(true));
   };
   const wallet = useAppSelector((state) => state.wallet);
@@ -65,11 +66,11 @@ const ConnectWallet: React.FC = () => {
                     {getShortAddress(wallet.walletconnect)}
                 </div>
             ) : null}
-            <div onClick={handleOpenConnectWalletDialog}><AddContainedSVG size={'md'} /> Add wallet</div>
+            <div onClick={() => handleOpenConnectWalletDialog()} className={cx('btn-add-wallet')}><AddContainedSVG size={'md'} /> Add wallet</div>
           </div>
         </>
       ) : (
-        <div className={cx('button')} onClick={handleOpenConnectWalletDialog}>
+        <div className={cx('button')} onClick={() => handleOpenConnectWalletDialog()}>
           Connect wallet
         </div>
       )}
