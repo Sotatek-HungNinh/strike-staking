@@ -158,7 +158,7 @@ const ConnectWalletDialog: React.FC = () => {
     if (apiKey && apiSecret) {
       const res: any = await connectCoinbase(apiKey, apiSecret);
       if (res.code === 401) {
-        dispatch(openSnackbar({variant: SnackbarVariant.ERROR, message: res.data}))
+        dispatch(openSnackbar({ variant: SnackbarVariant.ERROR, message: res.data }))
       } else {
         dispatch(setCoinbaseAddress(res.data.data.id))
       }
