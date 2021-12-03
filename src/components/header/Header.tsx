@@ -2,7 +2,7 @@ import React from "react";
 import classnames from 'classnames/bind';
 import style from './Header.module.scss';
 import ConnectWallet from "../connect-wallet/ConnectWallet";
-import logo from './../../assets/imgs/logo.052a772b.png';
+import logo from './../../assets/imgs/chain_logo.png';
 const cx = classnames.bind(style);
 
 export interface HeaderProps {

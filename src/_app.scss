@@ -14,6 +14,9 @@ body {
   --color-dialog-title: #4e4b66;
   --color-primary: #1a88c9;
   --background-color-main: #39496a;
+  --main-background-color: #001C4E;
+  --footer-background-color: #01163D;
+  --btn-background-color: #72BF65;
 }
 [data-theme='dark'] {
   --background-color: #232424;
@@ -25,10 +28,11 @@ body {
 }
 .area-chart-main {
   padding: 0 100px;
+  background-color: var(--main-background-color);
 }
 .footer {
   height: 100px;
-  background: var(--background-color-main);
+  background: var(--footer-background-color);
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -45,4 +49,7 @@ body {
   font-size: 25px;
   font-weight: 700;
   color: #72BF65;
+}
+.securing-chain {
+  color: #eceff9;
 }

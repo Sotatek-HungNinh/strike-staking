@@ -1,6 +1,6 @@
 :root {
   .header-parent {
-    background-color: var(--background-header-color);
+    background-color: var(--main-background-color);
     padding: 20px 100px;
     display: flex;
     justify-content: space-between;
@@ -17,6 +17,7 @@
     div {
       padding: 0 10px;
       cursor: pointer;
+      color: #fff;
     }
     div:hover {
       text-decoration: underline;

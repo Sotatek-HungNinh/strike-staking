@@ -29,7 +29,7 @@ const App: React.FC = () => {
               <MenuItem value={'USDT'}>USDT</MenuItem>
               <MenuItem value={'USDC'}>USDC</MenuItem>
             </Select>
-            <div>Securing chain governance</div>
+            <div className={'securing-chain'}>Securing chain governance</div>
           </div>
           <AreaChart />
         </div>}
