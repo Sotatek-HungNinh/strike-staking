@@ -66,7 +66,7 @@ const ConnectWallet: React.FC = () => {
                     {getShortAddress(wallet.walletconnect)}
                 </div>
             ) : null}
-            <div onClick={() => handleOpenConnectWalletDialog()} className={cx('btn-add-wallet')}><AddContainedSVG size={'md'} /> Add wallet</div>
+            <div onClick={() => handleOpenConnectWalletDialog()} className={cx('btn-add-wallet')}><AddContainedSVG size={'md'} /> Switch wallet</div>
           </div>
         </>
       ) : (

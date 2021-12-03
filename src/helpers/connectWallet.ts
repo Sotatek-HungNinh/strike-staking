@@ -71,9 +71,9 @@ export const connectTrust = async () => {
         },
         chainId: 56,
       },
-      display: {
-        name: 'Mobile',
-      },
+      // display: {
+      //   name: "Mobile"
+      // },
     },
   };
   const web3Modal = new Web3Modal({
@@ -107,6 +107,7 @@ export const connectCoinbase = async (apiKey: string, apiSecret: string) => {
       'CB-ACCESS-TIMESTAMP': timestamp,
       'CB-ACCESS-KEY': apiKey,
     },
+    baseUrl: process.env.REACT_APP_COIN_BASE_URL
   };
   let response: {code: number, data: any} = {code: 200, data: 'any'};
   await axiosCoinBaseInstance(options)

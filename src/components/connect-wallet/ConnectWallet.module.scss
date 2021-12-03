@@ -20,6 +20,10 @@
     .wallet-item:hover {
       background-color: rgb(164, 196, 185);
     }
+    z-index: 100;
+    .btn-add-wallet {
+      cursor: pointer;
+    }
   }
   .close {
     display: none;
