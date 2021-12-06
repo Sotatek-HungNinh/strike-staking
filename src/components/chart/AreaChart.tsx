@@ -4,6 +4,12 @@ import styles from './AreaChart.module.scss';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import axiosCoinBaseInstance from '../../config/config';
+import { CoinGeckoClient } from 'coingecko-api-v3';
+
+const coinGeckoClient = new CoinGeckoClient({
+  timeout: 10000,
+  autoRetry: true,
+});
 
 const cx = classNames.bind(styles);
 const defaultSeries = [{ data: [1, 2, 3], name: 'Price' }];
@@ -90,20 +96,18 @@ const AreaChart: React.FC = () => {
     setSeries(series);
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const chainPrice = async () => {
-    const optionsAxios = {
-      baseUrl: process.env.REACT_APP_COINGECKO,
-    };
-    await axiosCoinBaseInstance(optionsAxios)
-      .get('/coins/chain/ohlc?vs_currency=usd&days=30')
-      .then((response) => chainPriceDataForChart(response.data))
-      .catch((err) => console.log('ERROR: ', err));
-  };
+  const getCoinGecko = async() => {
+    const aa = await coinGeckoClient.coinIdOHLC({
+      id: "chain",
+      vs_currency: "usd",
+      days: 30
+    })
+    chainPriceDataForChart(aa)
+  }
 
   useEffect(() => {
-    chainPrice();
-  });
+    getCoinGecko();
+  },[]);
 
   return (
     <div className={cx('area-chart')}>

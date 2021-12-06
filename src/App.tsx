@@ -23,11 +23,12 @@ const App: React.FC = () => {
         {isConnected(wallet) ? (<div><Balances /> <History /></div>) : 
         <div>
           <div className={'text-head'}>
-            <span>$23,456,435,432 </span>
+            <span>$278,471,325</span>
             <Select>
               <MenuItem value={'USD'}>USD</MenuItem>
               <MenuItem value={'USDT'}>USDT</MenuItem>
               <MenuItem value={'USDC'}>USDC</MenuItem>
+              <MenuItem value={'USDC'}>CHN</MenuItem>
             </Select>
             <div className={'securing-chain'}>Securing chain governance</div>
           </div>
